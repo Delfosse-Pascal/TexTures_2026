@@ -42,6 +42,20 @@
 *.m4a
 *.wma
 
+# Livres numeriques / ebooks
+*.epub
+*.mobi
+*.azw
+*.azw3
+*.djvu
+*.fb2
+*.ibooks
+*.lit
+*.lrf
+*.pdb
+*.cbz
+*.cbr
+
 # System and editor files
 .DS_Store
 Thumbs.db

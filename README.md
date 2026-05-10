@@ -1,27 +1,77 @@
 # TexTures 2026
 
-Bibliotheque locale de textures destinee a regrouper des images de reference et de travail pour des usages graphiques, 3D, rendu, prototypage ou documentation visuelle.
+TexTures 2026 est un site local de consultation pour une collection de textures, de vignettes et de musiques. Le projet sert a parcourir les contenus presents sur la machine sous forme de pages HTML simples, navigables et utilisables hors ligne.
+
+## Objectif du projet
+
+Ce depot versionne uniquement les fichiers utiles a la structure du site :
+
+- documentation ;
+- pages HTML ;
+- feuilles de style CSS ;
+- scripts JavaScript ;
+- scripts de generation ;
+- fichiers de configuration Git.
+
+Les fichiers lourds ou binaires restent dans le dossier local, mais ils ne sont pas envoyes dans GitHub.
 
 ## Contenu local
 
-Le dossier local contient actuellement des lots de textures organises par format, resolution et fond :
+Les dossiers locaux contiennent principalement des textures classees par taille, format et couleur de fond.
 
-| Dossier | Description | Nombre de fichiers |
-| --- | --- | ---: |
-| `2048-JPG-242424` | Textures JPG en 2048 px sur fond sombre `#242424`. | 615 |
-| `2048-JPG-FFFFFF` | Textures JPG en 2048 px sur fond blanc `#FFFFFF`. | 615 |
-| `256-JPG-242424` | Textures JPG en 256 px sur fond sombre `#242424`. | 624 |
-| `256-JPG-FFFFFF` | Textures JPG en 256 px sur fond blanc `#FFFFFF`. | 624 |
-| `64-PNG` | Vignettes ou apercus PNG en 64 px. | 72 |
-| `thumbnail` | Vignettes JPG de consultation rapide. | 2260 |
+| Dossier | Role | Contenu local |
+| --- | --- | --- |
+| `2048-JPG-242424` | Galerie haute resolution sur fond sombre. | Images JPG locales ignorees par Git. |
+| `2048-JPG-FFFFFF` | Galerie haute resolution sur fond blanc. | Images JPG locales ignorees par Git. |
+| `256-JPG-242424` | Galerie moyenne resolution sur fond sombre. | Images JPG locales ignorees par Git. |
+| `256-JPG-FFFFFF` | Galerie moyenne resolution sur fond blanc. | Images JPG locales ignorees par Git. |
+| `64-PNG` | Petites vignettes PNG. | Images PNG locales ignorees par Git. |
+| `thumbnail` | Miniatures de navigation et sous-galeries. | Images JPG locales ignorees par Git. |
+| `Musique` | Pistes audio locales. | Fichiers audio ignores par Git. |
 
-Les fichiers repertories localement sont majoritairement des images de textures (`.jpg` et `.png`) nommees par categorie ou materiau, par exemple briques, beton, bois, nourriture, metaux, sols et surfaces diverses.
+## Site HTML local
 
-## Gestion Git
+Le fichier `index.html` a la racine est l'entree principale du site. Il donne acces aux galeries, aux pages paginees, aux miniatures et a la section musique.
 
-Ce depot Git sert principalement a versionner la documentation, les fichiers de configuration et les eventuels scripts ou index texte du projet.
+Les pages generees incluent :
 
-Les images, PDF, videos, archives et fichiers audio sont volontairement exclus du suivi Git afin d'eviter de publier des fichiers lourds ou binaires dans le depot. Ils restent disponibles dans le dossier local de travail, mais ne sont pas ajoutes aux commits.
+- un mode clair / sombre ;
+- une navigation locale ;
+- des miniatures visibles sur la page d'accueil ;
+- des galeries adaptees aux images disponibles ;
+- l'affichage agrandi d'une image au clic ;
+- la fermeture de l'affichage agrandi avec la touche Echappe ;
+- les dimensions et le poids des fichiers sous les images ;
+- des boutons musique qui lancent ou arretent l'audio sans lecteur visible ;
+- les liens sociaux externes demandes, sans dependance obligatoire a Internet.
+
+Le site reste donc consultable localement meme si les ressources externes ne chargent pas.
+
+## Generation du site
+
+Le site est genere par le script :
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\generate-site.ps1
+```
+
+Ce script parcourt les dossiers locaux, detecte les images et les musiques, puis regenere les pages HTML et les assets locaux dans `site-assets/`.
+
+## Regles Git
+
+Le depot GitHub ne doit pas recevoir :
+
+- images ;
+- PDF ;
+- videos ;
+- archives ;
+- fichiers audio ou musique ;
+- livres numeriques ;
+- autres fichiers binaires lourds.
+
+Ces exclusions sont gerees par `.gitignore`.
+
+Git ne suit pas les dossiers vides. Les "tiroirs" visibles dans le depot correspondent donc uniquement aux chemins necessaires pour ranger les fichiers texte du site. L'objectif est de garder une structure courte et claire, avec uniquement les dossiers de base utiles au site local.
 
 ## Depot distant
 
@@ -29,8 +79,13 @@ Depot GitHub associe :
 
 <https://github.com/Delfosse-Pascal/TexTures_2026>
 
-## Notes de maintenance
+## Verification avant publication
 
-- Ajouter les nouveaux fichiers texte utiles au suivi du projet : documentation, inventaires, scripts, licences ou notes de traitement.
-- Conserver les medias sources dans les dossiers locaux prevus a cet effet.
-- Verifier `git status` avant chaque commit pour confirmer que seuls les fichiers voulus sont suivis.
+Avant chaque commit, verifier :
+
+```powershell
+git status --short
+git ls-files --cached
+```
+
+Le commit ne doit contenir que des fichiers de documentation, HTML, CSS, JavaScript, PowerShell ou configuration Git.
