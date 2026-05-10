@@ -31,18 +31,18 @@ Les dossiers locaux contiennent principalement des textures classees par taille,
 
 ## Site HTML local
 
-Le fichier `index.html` a la racine est l'entree principale du site publie. Il ne pointe plus vers les tiroirs d'images retires de GitHub.
+Le fichier `index.html` a la racine est l'entree principale du site local. Il peut pointer vers les tiroirs d'images presents sur la machine afin de garder une navigation complete en local.
 
 Les pages generees incluent :
 
 - un mode clair / sombre ;
 - une navigation locale ;
-- une page d'accueil simple ;
+- une page d'accueil avec miniatures quand les dossiers locaux sont presents ;
 - les styles et scripts locaux du site ;
 - des boutons musique qui lancent ou arretent l'audio sans lecteur visible ;
 - les liens sociaux externes demandes, sans dependance obligatoire a Internet.
 
-Le site reste donc consultable localement meme si les ressources externes ne chargent pas.
+Le site reste donc consultable localement meme si les ressources externes ne chargent pas. Sur GitHub, les tiroirs d'images ne sont pas publies : l'accueil est surtout prevu pour l'ouverture depuis le dossier local complet.
 
 ## Generation du site
 

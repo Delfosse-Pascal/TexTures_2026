@@ -394,17 +394,20 @@ function New-HomePage {
         [array]$Pages,
         [array]$AudioFiles
     )
-    $publishedPages = @($Pages | Where-Object {
-        $_.Kind -eq "Audio" -and (Split-Path $_.Directory -Leaf) -eq "Musique"
-    })
+    $thumbnailRoot = Join-Path $Root "thumbnail"
     $homeThumbs = @()
+    if (Test-Path $thumbnailRoot) {
+        $homeThumbs = @(Get-ChildItem -Path $thumbnailRoot -Recurse -File -Include *.jpg,*.jpeg,*.png |
+            Where-Object { $_.Length -gt 30000 } |
+            Sort-Object FullName)
+    }
     $html = New-Object System.Text.StringBuilder
     [void]$html.AppendLine((Get-PageFrameStart -Title "TexTures 2026 - Accueil" -PageDir $Root -ClassName "home-page variant-bubbles"))
     [void]$html.AppendLine("<section class=""home-hero"">")
     [void]$html.AppendLine("<div>")
     [void]$html.AppendLine("<p class=""kicker"">Site local</p>")
     [void]$html.AppendLine("<h1>TexTures 2026</h1>")
-    [void]$html.AppendLine("<p>Accueil general du projet. Les galeries de textures restent conservees localement, mais les tiroirs d'images ne sont plus publies sur GitHub. La page ci-dessous donne acces aux contenus texte conserves dans le depot.</p>")
+    [void]$html.AppendLine("<p>Accueil general des textures, vignettes et musiques du projet. Les galeries restent conservees localement et l'accueil relie les pages disponibles sur cette machine, avec miniatures, navigation et musique manuelle.</p>")
     [void]$html.AppendLine("</div>")
     [void]$html.AppendLine("<div class=""sound-panel"" id=""musique"">")
     if ($AudioFiles.Count -gt 0) {
@@ -422,7 +425,7 @@ function New-HomePage {
     [void]$html.AppendLine("</section>")
     [void]$html.AppendLine("<section class=""page-tiles home-tiles"" id=""galeries"">")
     $i = 0
-    foreach ($page in $publishedPages) {
+    foreach ($page in ($Pages | Where-Object { $_.Path -ne (Join-Path $Root "index.html") })) {
         $href = ConvertTo-PosixPath (Get-RelativePath -From $Root -To $page.Path)
         $title = Escape-Html $page.Title
         $kind = Escape-Html "$($page.Kind) - $($page.Count) element(s)"
