@@ -56,6 +56,14 @@
 *.cbz
 *.cbr
 
+# Dossiers locaux de medias et galeries non publies sur GitHub
+64-PNG/
+256-JPG-242424/
+256-JPG-FFFFFF/
+2048-JPG-242424/
+2048-JPG-FFFFFF/
+thumbnail/
+
 # System and editor files
 .DS_Store
 Thumbs.db

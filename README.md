@@ -21,27 +21,24 @@ Les dossiers locaux contiennent principalement des textures classees par taille,
 
 | Dossier | Role | Contenu local |
 | --- | --- | --- |
-| `2048-JPG-242424` | Galerie haute resolution sur fond sombre. | Images JPG locales ignorees par Git. |
-| `2048-JPG-FFFFFF` | Galerie haute resolution sur fond blanc. | Images JPG locales ignorees par Git. |
-| `256-JPG-242424` | Galerie moyenne resolution sur fond sombre. | Images JPG locales ignorees par Git. |
-| `256-JPG-FFFFFF` | Galerie moyenne resolution sur fond blanc. | Images JPG locales ignorees par Git. |
-| `64-PNG` | Petites vignettes PNG. | Images PNG locales ignorees par Git. |
-| `thumbnail` | Miniatures de navigation et sous-galeries. | Images JPG locales ignorees par Git. |
+| `2048-JPG-242424` | Galerie haute resolution sur fond sombre. | Dossier local ignore par Git et retire de GitHub. |
+| `2048-JPG-FFFFFF` | Galerie haute resolution sur fond blanc. | Dossier local ignore par Git et retire de GitHub. |
+| `256-JPG-242424` | Galerie moyenne resolution sur fond sombre. | Dossier local ignore par Git et retire de GitHub. |
+| `256-JPG-FFFFFF` | Galerie moyenne resolution sur fond blanc. | Dossier local ignore par Git et retire de GitHub. |
+| `64-PNG` | Petites vignettes PNG. | Dossier local ignore par Git et retire de GitHub. |
+| `thumbnail` | Miniatures de navigation et sous-galeries. | Dossier local ignore par Git et retire de GitHub. |
 | `Musique` | Pistes audio locales. | Fichiers audio ignores par Git. |
 
 ## Site HTML local
 
-Le fichier `index.html` a la racine est l'entree principale du site. Il donne acces aux galeries, aux pages paginees, aux miniatures et a la section musique.
+Le fichier `index.html` a la racine est l'entree principale du site publie. Il ne pointe plus vers les tiroirs d'images retires de GitHub.
 
 Les pages generees incluent :
 
 - un mode clair / sombre ;
 - une navigation locale ;
-- des miniatures visibles sur la page d'accueil ;
-- des galeries adaptees aux images disponibles ;
-- l'affichage agrandi d'une image au clic ;
-- la fermeture de l'affichage agrandi avec la touche Echappe ;
-- les dimensions et le poids des fichiers sous les images ;
+- une page d'accueil simple ;
+- les styles et scripts locaux du site ;
 - des boutons musique qui lancent ou arretent l'audio sans lecteur visible ;
 - les liens sociaux externes demandes, sans dependance obligatoire a Internet.
 
@@ -55,7 +52,7 @@ Le site est genere par le script :
 powershell -ExecutionPolicy Bypass -File tools\generate-site.ps1
 ```
 
-Ce script parcourt les dossiers locaux, detecte les images et les musiques, puis regenere les pages HTML et les assets locaux dans `site-assets/`.
+Ce script parcourt les dossiers locaux, detecte les images et les musiques, puis regenere les pages HTML et les assets locaux. Les dossiers d'images restent ignores par Git, meme si les fichiers existent localement.
 
 ## Regles Git
 
@@ -71,7 +68,9 @@ Le depot GitHub ne doit pas recevoir :
 
 Ces exclusions sont gerees par `.gitignore`.
 
-Git ne suit pas les dossiers vides. Les "tiroirs" visibles dans le depot correspondent donc uniquement aux chemins necessaires pour ranger les fichiers texte du site. L'objectif est de garder une structure courte et claire, avec uniquement les dossiers de base utiles au site local.
+Les tiroirs `64-PNG`, `256-JPG-242424`, `256-JPG-FFFFFF`, `2048-JPG-242424`, `2048-JPG-FFFFFF` et `thumbnail` sont volontairement retires de GitHub et ignores par Git. Ils peuvent rester presents sur le disque local pour le travail, mais ils ne doivent plus etre publies.
+
+Git ne suit pas les dossiers vides. Les tiroirs visibles dans le depot correspondent donc uniquement aux chemins necessaires pour ranger les fichiers texte du site. L'objectif est de garder une structure courte et claire, avec uniquement les dossiers de base utiles au depot publie.
 
 ## Depot distant
 
